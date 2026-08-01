@@ -1,0 +1,45 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.quadrata.com/integration/how-to-integrate/quadrata-sdk/advanced/installation
+notes: >-
+  First-party client libraries published under the @quadrata npm scope. The @quadrata/sdk meta-package
+  exposes /client (React onboarding) and /api (server-side REST) subpath entry points. Versions and dates
+  read from the npm registry on 2026-07-20.
+packages:
+- language: javascript
+  registry: npm
+  name: "@quadrata/sdk"
+  url: https://www.npmjs.com/package/@quadrata/sdk
+  install: npm i --save @quadrata/sdk
+  version: 1.1.0
+  official: true
+  description: Quadrata SDK meta-package (exposes @quadrata/sdk/client and @quadrata/sdk/api entry points).
+- language: solidity
+  registry: npm
+  name: "@quadrata/contracts"
+  url: https://www.npmjs.com/package/@quadrata/contracts
+  install: npm i --save @quadrata/contracts
+  official: true
+  description: Quadrata on-chain smart-contract interfaces/ABIs for querying passport attributes.
+- language: javascript
+  registry: npm
+  name: "@quadrata/core-react"
+  url: https://www.npmjs.com/package/@quadrata/core-react
+  install: npm i --save @quadrata/core-react
+  version: 3.0.0
+  official: true
+  description: Core React library (QuadClient) shared by all client-side onboarding packages.
+- language: javascript
+  registry: npm
+  name: "@quadrata/client-react"
+  url: https://www.npmjs.com/package/@quadrata/client-react
+  install: npm i --save @quadrata/client-react
+  official: true
+  description: React package for individual (KYC) passport onboarding.
+- language: javascript
+  registry: npm
+  name: "@quadrata/kyb-react"
+  url: https://www.npmjs.com/package/@quadrata/kyb-react
+  install: npm i --save @quadrata/kyb-react
+  official: true
+  description: React package for business (KYB) passport onboarding.

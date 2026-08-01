@@ -1,0 +1,25 @@
+generated: '2026-07-20'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: quadrata.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct  4 14:30:34 2026 GMT
+  hsts: true
+  hsts_max_age: 63072000
+- host: docs.quadrata.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Aug 31 23:05:42 2026 GMT
+  hsts: true
+  hsts_max_age: 31536000
+- host: prod.quadrata.com
+  https: false
+domains:
+- domain: quadrata.com
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: reject

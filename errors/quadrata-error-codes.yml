@@ -1,0 +1,43 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.quadrata.com/integration/how-to-integrate/on-chain-wallet-screening/api-get-on-chain-aml-score
+format: custom
+notes: >-
+  Quadrata does NOT use RFC 9457 problem+json. Errors return a flat JSON envelope with a human 'detail',
+  a short 'error' label, and a numeric 'error_code'. Codes below are those documented on the API reference
+  pages; the code space appears to encode HTTP status in its leading digits (40xx = 4xx).
+envelope:
+  fields:
+    detail: Human-readable description of the error.
+    error: Short error label (often mirrors detail).
+    error_code: Numeric Quadrata error code.
+errors:
+- error_code: 4000
+  http_status: 400
+  error: Invalid wallet address
+  detail: Invalid wallet address
+  remediation: Supply a valid checksummed EVM wallet address in the path parameter.
+  source_operation: GET /v1/wallets/{walletAddress}/screening
+- error_code: 4012
+  http_status: 401
+  error: Invalid Request Signature
+  detail: Invalid Request Signature
+  remediation: >-
+    Regenerate the ECDSA request signature; ensure the Date header is fresh (15s lifetime), the signing
+    message parts (method/path/query/date/nonce) match the request exactly, and the registered public key
+    corresponds to the signing private key.
+  source_operation: signed server-side endpoints
+- error_code: 4030
+  http_status: 403
+  error: Company is not authorized to access this endpoint
+  detail: Company is not authorized to access this endpoint
+  remediation: >-
+    Feature must be enabled for your company account; contact support@quadrata.com to request access
+    (e.g. on-chain wallet screening / premium ongoing monitoring).
+  source_operation: gated endpoints (e.g. wallet screening)
+- error_code: 401
+  http_status: 401
+  error: Unauthorized (privacy access token reuse)
+  detail: Privacy Access Tokens are one-time use; attempting to reuse a token returns 401 Unauthorized.
+  remediation: Request a fresh one-time Privacy Access Token from GET /api/v1/privacy/access/{wallet}.
+  source_operation: GET /api/v1/privacy/data/{account}

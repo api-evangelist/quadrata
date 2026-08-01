@@ -1,0 +1,59 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.quadrata.com/integration/how-to-integrate/request-privacy-data/api-requests/how-to-sign-api
+docs: https://docs.quadrata.com/integration/how-to-integrate/onboard-users/individual-passport-onboarding/2.-api-authentication
+summary:
+  types: [apiKey, http-basic, ecdsa-request-signature, jwt-access-token]
+  api_key_in: [header]
+  notes: >-
+    Quadrata uses a company API_KEY. Client onboarding flows exchange the API_KEY at POST /api/v1/login
+    for a short-lived (60 minute) JWT accessToken passed to the client SDK. Server-only endpoints (privacy
+    data, wallet screening) authenticate with HTTP Basic (base64 of the API_KEY) plus an ECDSA request
+    signature over method+path+query+Date(+nonce), verified against a public signing key registered with
+    Quadrata. Signatures have a 15-second lifetime.
+schemes:
+- name: LoginApiKey
+  type: apiKey
+  in: body
+  parameter: apiKey
+  flow: >-
+    POST /api/v1/login with {"apiKey": "<COMPANY_API_KEY>"} returns a JWT accessToken (type: login,
+    60-minute expiry) used to initialize the client onboarding SDK (<QuadClient>).
+  endpoints:
+    production: https://prod.quadrata.com/api/v1/login
+    integration: https://int.quadrata.com/api/v1/login
+- name: BasicApiKey
+  type: http
+  scheme: basic
+  in: header
+  header: Authorization
+  format: 'Basic {base64(API_KEY)}'
+  notes: Same company API_KEY, base64-encoded, on all server-side privacy/screening endpoints.
+- name: EcdsaRequestSignature
+  type: signature
+  algorithm: ECDSA
+  in: header
+  header: Signature
+  key_pair: >-
+    Integrator generates an ECDSA key pair; the private signing key never leaves the integrator and is
+    never known to Quadrata; the public key is registered with Quadrata to map the API Login Key.
+  signing_message:
+    parts:
+    - method (uppercase)
+    - absolute path
+    - query string (no '?')
+    - HTTP Date header
+    - nonce (optional)
+    join: newline
+    encoding: base64-url
+    nonce: appended to the signature delimited by '.', also base64-url encoded
+    lifetime_seconds: 15
+  auto_generated_by_sdk: true
+- name: PrivacyAccessToken
+  type: one-time-token
+  in: header
+  header: X-Access-Token
+  format: 'base64(authToken:accessToken)'
+  notes: >-
+    One-time-use token obtained from GET /api/v1/privacy/access/{wallet}; required (in addition to Basic
+    auth + Signature) to fetch consented privacy (PII) data. Reuse returns 401 Unauthorized.

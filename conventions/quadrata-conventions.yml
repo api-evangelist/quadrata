@@ -1,0 +1,47 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.quadrata.com/integration/how-to-integrate/request-privacy-data/api-requests/how-to-sign-api
+notes: Cross-cutting request/response semantics for the Quadrata Passport REST API.
+authentication:
+  style: HTTP Basic (base64 API_KEY) + ECDSA request signature; JWT access token for client onboarding
+  ref: authentication/quadrata-authentication.yml
+request_signing:
+  required_on: [privacy data endpoints, wallet screening endpoints]
+  headers: [Authorization, Date, Signature]
+  message_parts: [method, path, query_string, date, nonce]
+  signature_encoding: base64-url
+  signature_lifetime_seconds: 15
+  nonce: recommended, appended to signature after '.'
+  date_header: required (RFC 1123, e.g. 'Wed, 04 Oct 2023 02:39:37 GMT')
+idempotency:
+  supported: false
+  notes: >-
+    No documented idempotency-key contract. A per-request nonce exists but it guarantees request-signature
+    uniqueness/anti-replay, not idempotent retry semantics. Privacy access tokens are explicitly one-time-use.
+pagination:
+  supported: false
+  notes: No documented list pagination; attribute/privacy responses return the full granted set.
+sparse_fields:
+  supported: true
+  mechanism: query parameter 'scopes' (e.g. ?scopes=FN,EM) to fetch a subset of granted privacy scopes
+  special_scope: KYB_FULL to fetch all business information
+response_envelope:
+  success: '{ "data": { ... }, "type": "<resource-type>" }'
+  types_observed: [login, wallet.screening, privacy.data]
+  error: '{ "detail": "...", "error": "...", "error_code": <int> }'
+  ref: errors/quadrata-error-codes.yml
+versioning:
+  scheme: uri-path
+  current: v1
+  example: /api/v1/login
+webhooks:
+  ref: asyncapi/quadrata-webhooks.yml
+  signature_header: X-WEBHOOK-SIGNATURE
+  signature_algorithm: SHA384 (base64-encoded)
+  retry: up to 3 delivery attempts on non-2xx response
+environments:
+  production: https://prod.quadrata.com/api/v1
+  integration: https://int.quadrata.com/api/v1
+  sandbox: https://sandbox.quadrata.com
+rate_limit_signaling:
+  documented: false

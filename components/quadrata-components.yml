@@ -1,0 +1,24 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.quadrata.com/integration/how-to-integrate/quadrata-sdk/advanced/client-libraries
+notes: >-
+  Client-side, embeddable React onboarding components shipped by the Quadrata SDK. These are prebuilt UI
+  surfaces a dApp mounts to let users claim a passport (KYC/KYB), distinct from the server-side REST API.
+loader_libraries:
+- '@quadrata/core-react'
+- '@tanstack/react-query'
+component_families:
+- family: QuadClient (Individual / KYC onboarding)
+  package: '@quadrata/client-react'
+  description: React component + hooks that render the individual passport onboarding flow in a dApp.
+  hooks: [useOnboardStatus]
+  loading_modes: [lazy loading, eager loading]
+- family: QuadrataKyb (Business / KYB onboarding)
+  package: '@quadrata/kyb-react'
+  description: React component that renders the business (KYB) passport onboarding flow.
+- family: QuadrataReact (All-In-One onboarding)
+  package: '@quadrata/sdk/client'
+  description: Combined component letting users claim an individual OR business passport from one surface.
+integration:
+  connectors: [With Wagmi Connect (wagmi@2 + viem@2)]
+  examples: [With Wagmi Connect, KYC Only, KYB Only, All In One]

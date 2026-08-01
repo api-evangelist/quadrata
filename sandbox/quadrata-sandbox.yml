@@ -1,0 +1,33 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.quadrata.com/integration/additional-information/quadrata-sandbox
+notes: >-
+  Quadrata provides a passport-issuer sandbox DApp to mint on-demand passports without real user data and
+  to customize attribute values for testing. Distinct from production, where attribute values are fixed.
+sandbox:
+  url: https://sandbox.quadrata.com
+  faucet_url: https://sandbox.quadrata.com/faucet
+  api_environment: https://int.quadrata.com/api/v1
+  network: Goerli (testnet)
+  eth_faucet: https://goerli-faucet.pk910.de/
+  payment_tokens:
+    notes: Custom, valueless test tokens minted via faucetMint() or the sandbox faucet UI.
+    tokens: [wBTC (test), DAI (test), USDC (test)]
+  workflow:
+  - Connect wallet (MetaMask / WalletConnect) and switch to the Goerli testnet.
+  - Submit the wallet address to test; you are prompted to submit attributes and mint a passport.
+  - Enter custom attribute values (see passport attributes); DID auto-generates if left blank, or supply
+    an existing DID to attach the wallet to an existing entity.
+  - Mint the passport and submit the transaction from your wallet.
+  - Re-submit an existing test wallet to update attribute values and observe DApp behavior.
+  test_values:
+    notes: >-
+      No fixed magic test identifiers are published; testers set arbitrary attribute values (AML 1-10,
+      COUNTRY, DID, INVESTOR_STATUS, etc.) via the sandbox UI. Never invent production values.
+smart_contracts:
+  source: https://docs.quadrata.com/integration/additional-information/flex-kit-attributes/smart-contract-addresses
+  addresses:
+  - network: Goerli
+    address: '0xc74b1DB712E04e5AfE43E2Cb862C911BDb9853C0'
+  - network: Mumbai
+    address: '0x6F2EAA8118656B4Ab96e335C1A2302EC5Da1C72C'

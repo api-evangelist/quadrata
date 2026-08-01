@@ -1,0 +1,45 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.quadrata.com/integration/introduction/passport-attributes
+notes: >-
+  Entity model for the Quadrata Passport, derived from the documented passport attributes, privacy-data
+  schema, and API response types. A Passport is a soulbound NFT bound to one or more wallet addresses and
+  carries on-chain attributes plus (with consent) off-chain privacy data.
+entities:
+- name: Passport
+  description: Soulbound (non-transferable) NFT identity passport bound to a wallet / entity DID.
+  is_business: attribute IS_BUSINESS distinguishes individual vs business passports
+  relationships:
+  - {type: has_many, target: WalletAddress, via: walletAddresses}
+  - {type: has_many, target: Attribute, via: attributes}
+  - {type: has_one, target: PrivacyData, via: consent}
+- name: Attribute
+  description: On-chain passport attribute (verified claim) with a status and verifiedAt timestamp.
+  types:
+  - {code: DID, meaning: Sybil-resistant entity identifier, encoding: 32 bytes / string}
+  - {code: AML, meaning: Anti-money-laundering risk score, values: '1-10 (hex string)'}
+  - {code: COUNTRY, meaning: ISO 3166-1 alpha-2 issuing country, encoding: keccak256(code)}
+  - {code: IS_BUSINESS, meaning: Individual vs business, encoding: keccak256("TRUE") or omitted}
+  - {code: INVESTOR_STATUS, meaning: Accredited/sophisticated investor (US), values: keccak256 TRUE/FALSE}
+  - {code: CRED_PROTOCOL_SCORE, meaning: Cred Protocol credit score, values: '300-1000 (hex string)'}
+  statuses: [READY, IN_REVIEW, APPROVED, REJECTED]
+- name: WalletAddress
+  description: EVM wallet address; multiple addresses can belong to one entity (linked via DID).
+  relationships:
+  - {type: belongs_to, target: Passport, via: walletAddress}
+- name: PrivacyData
+  description: Off-chain PII / KYB data released only under user consent via signed server-side API.
+  individual_scopes: [FN, MN, LN, DOB, ADR, EM, G, GC, GE, GI, GIS, GP, SLF]
+  business_scopes: [KYB_NAME, KYB_ADR, KYB_DESC, KYB_TYPE, KYB_PURP, KYB_PLACE, KYB_DATE, KYB_JUR,
+    KYB_URL, KYB_WALLET, KYB_TIN, KYB_FILES, KYB_OWNERS, KYB_FULL]
+  relationships:
+  - {type: belongs_to, target: Passport, via: account}
+  - {type: has_many, target: BeneficialOwner, via: KYB_OWNERS}
+- name: BeneficialOwner
+  description: Controlling person / beneficial owner attached to a business (KYB) passport.
+  relationships:
+  - {type: belongs_to, target: PrivacyData, via: KYB_OWNERS}
+- name: WalletScreening
+  description: On-chain AML score result for an arbitrary wallet address.
+  fields: [address, score, verifiedAt]
+supported_networks: [Ethereum, Polygon, Arbitrum, Optimism, Avalanche, Evmos, KAVA]

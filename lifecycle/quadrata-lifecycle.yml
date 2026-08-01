@@ -1,0 +1,21 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.quadrata.com/
+notes: >-
+  Versioning is expressed in the URI path (/api/v1/...). An 'Onboard Status API' is documented as V2.
+  No public status page (status.quadrata.com did not resolve), no published deprecation/sunset policy,
+  and no SLA page were found as of 2026-07-20.
+versioning:
+  scheme: uri-path
+  current: v1
+  notes: Onboard Status API documented as V2; core auth/privacy/screening endpoints on /api/v1.
+deprecation:
+  policy_url: null
+  sunset_header: false
+sla:
+  url: null
+status_page: null
+smart_contract_upgradeability:
+  notes: Smart contracts use OpenZeppelin upgradeable proxies, allowing underlying function changes.
+  source: https://docs.quadrata.com/integration/additional-information/smart-contracts
+deprecated_operations: []

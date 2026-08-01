@@ -1,0 +1,67 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.quadrata.com/integration/how-to-integrate/webhooks
+type: Webhooks
+notes: >-
+  Quadrata publishes an HTTP webhook (event notification) surface but no AsyncAPI document. Webhook URLs
+  are registered manually by emailing contact@quadrata.com. Each request carries an X-WEBHOOK-SIGNATURE
+  header (base64-encoded SHA384 signature) for verification, and Quadrata retries delivery up to 3 times
+  on any non-2xx response.
+transport: https
+delivery:
+  retries: 3
+  retry_trigger: HTTP response status outside 2xx range
+signature:
+  header: X-WEBHOOK-SIGNATURE
+  algorithm: SHA384
+  encoding: base64
+registration: email contact@quadrata.com to register a webhook URL
+events:
+- name: onboarding.kyc
+  type: ONBOARDING
+  plan: Free
+  description: Emitted when a KYC application reaches an end-state (IN_REVIEW, APPROVED, or REJECTED).
+- name: onboarding.aml
+  type: ONBOARDING
+  plan: Free
+  description: Emitted when an AML application reaches an end-state.
+- name: onboarding.accreditation
+  type: ONBOARDING
+  plan: Free
+  description: Emitted when an accredited-investor application reaches an end-state.
+- name: onboarding.business
+  type: ONBOARDING
+  plan: Free
+  description: Emitted when a KYB (business) application reaches an end-state.
+- name: onboarding.company_offering
+  type: OFFERING
+  plan: Free
+  description: Emitted when INVESTOR_STATUS is confirmed for a company offering.
+- name: monitoring.aml
+  type: MONITORING
+  plan: Premium
+  description: Ongoing monitoring - emitted when a passport's AML score changes (previousScore + score).
+payloads:
+  onboarding:
+    fields: [attributes, eventId, nonce, timestamp, type, walletAddresses]
+    example:
+      attributes:
+        AML: {status: READY, verifiedAt: 1703207512}
+        COUNTRY: {status: IN_REVIEW, verifiedAt: 1703207483}
+        DID: {status: IN_REVIEW, verifiedAt: 1703207483}
+      eventId: 447849bc-db53-4b8d-b9ba-dbfec82839e4
+      nonce: 3a186e5f
+      timestamp: 1703207849
+      type: ONBOARDING
+      walletAddresses: ['0xB343DB0FAB970eca78422505A82294304cE8c3eb']
+  offering:
+    fields: [attributes, eventId, nonce, offering, timestamp, type, walletAddresses]
+  monitoring:
+    fields: [eventId, monitoring, nonce, timestamp, type, walletAddress]
+    example:
+      eventId: 5bab4b6d-8f6b-48c3-ab19-4d1e423ae4be
+      monitoring: {previousScore: 1, score: 3, type: AML}
+      nonce: e1b2f73a
+      timestamp: 1703201319
+      type: MONITORING
+      walletAddress: '0x9b913Bb99324963Dc4B772E1e35AE23df0cACDeD'

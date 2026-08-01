@@ -1,0 +1,39 @@
+generated: '2026-07-20'
+method: derived
+status: candidate
+source: >-
+  Derived from documented Quadrata REST API operations and @quadrata/sdk/api service libraries
+  (https://docs.quadrata.com/integration/how-to-integrate/quadrata-sdk/advanced/api-libraries/api-service-libraries).
+  No official hosted/remote Quadrata MCP server was found.
+server:
+  name: quadrata
+  transport: http
+  url: null
+tools:
+- name: create_access_token
+  description: Exchange a company API key for a short-lived JWT access token used to initialize onboarding.
+  source_operation: POST https://prod.quadrata.com/api/v1/login
+- name: create_privacy_access_token
+  description: Obtain a one-time-use privacy access token to fetch consented PII for a wallet.
+  source_operation: GET /api/v1/privacy/access/{wallet}
+- name: fetch_privacy_data
+  description: Fetch consented privacy (PII / KYB) data for a wallet, optionally by sparse scopes.
+  source_operation: GET /api/v1/privacy/data/{account}
+- name: fetch_privacy_grants
+  description: Fetch the privacy permissions a user has granted to your dApp.
+  source_operation: GET /api/v1/privacy/permissions
+- name: revoke_privacy_grants
+  description: Revoke privacy permissions previously granted to your dApp.
+  source_operation: privacy revoke-permissions endpoint
+- name: fetch_wallet_screening
+  description: Fetch the on-chain AML score for a wallet address.
+  source_operation: GET /v1/wallets/{walletAddress}/screening
+- name: fetch_onboard_status
+  description: Fetch the onboarding status for a passport (V2 Onboard Status API).
+  source_operation: onboard status endpoint (@quadrata/sdk/api fetchOnboardStatus)
+- name: fetch_attribute_values
+  description: Fetch passport attribute values off-chain via the API service library.
+  source_operation: '@quadrata/sdk/api fetchAttributeValues'
+- name: fetch_passport_list
+  description: Fetch the list of passports.
+  source_operation: '@quadrata/sdk/api fetchPassportList'

@@ -1,8 +1,26 @@
 aid: quadrata
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/quadrata.png
 name: Quadrata
-description: 'Quadrata is a company surfaced as a portfolio company of multicoin-capital and added to
-  the API Evangelist network as a stub for enrichment. Sector: crypto-web3. This profile is a lead awaiting
-  the enrichment pipeline.'
+description: 'Quadrata is a privacy-preserving on-chain identity network for Web3, issuing a non-transferable
+  (soulbound) NFT "Passport" that binds verified identity, compliance and reputation attributes to a user
+  wallet without storing personal data on-chain. Integrators use the Quadrata SDK and REST API to onboard
+  users (KYC), businesses (KYB), and accredited/sophisticated investors, run AML risk and on-chain wallet
+  screening, request consented privacy (PII) data, and query passport attributes on-chain via smart contracts
+  or off-chain via API. Passport attributes include DID (sybil resistance), AML score, COUNTRY, IS_BUSINESS,
+  INVESTOR_STATUS, and Cred Protocol credit score. Supported networks include Ethereum, Polygon, Arbitrum,
+  Optimism, Avalanche, Evmos, and KAVA.'
 url: https://raw.githubusercontent.com/api-evangelist/quadrata/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -11,17 +29,108 @@ x-backed-by:
 x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
+x-enrichment:
+  date: '2026-07-20'
+  status: enriched
+  artifacts_added: 12
+  pass: local-v1
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-20'
 tags:
 - Company
 - Crypto Web3
-apis: []
+- Identity
+- Digital Identity
+- KYC
+- KYB
+- AML
+- Compliance
+- Wallet Screening
+- Blockchain
+- Web3
+- Decentralized Identity
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- name: Quadrata Passport API
+  description: 'Server-side REST API for Quadrata Passport: login/access-token authentication, ECDSA-signed
+    privacy data requests, on-chain AML wallet screening, and passport attribute queries. Distributed as
+    the @quadrata/sdk JavaScript/TypeScript client alongside on-chain smart-contract reads.'
+  humanURL: https://docs.quadrata.com/
+  baseURL: https://prod.quadrata.com/api/v1
+  tags:
+  - Identity
+  - KYC
+  - AML
+  - Web3
+  properties:
+  - type: Documentation
+    url: https://docs.quadrata.com/
+  - type: Authentication
+    url: authentication/quadrata-authentication.yml
+  - type: Conventions
+    url: conventions/quadrata-conventions.yml
+  - type: ErrorCatalog
+    url: errors/quadrata-error-codes.yml
+  - type: Webhooks
+    url: asyncapi/quadrata-webhooks.yml
+  - type: DataModel
+    url: data-model/quadrata-data-model.yml
+  - type: MCPServer
+    url: mcp/quadrata-mcp.yml
 common:
 - type: Website
   url: https://quadrata.com
+- type: DeveloperPortal
+  url: https://docs.quadrata.com/
+- type: Documentation
+  url: https://docs.quadrata.com/integration/introduction/introduction-to-quadrata
+- type: GettingStarted
+  url: https://docs.quadrata.com/integration/how-to-integrate/quadrata-sdk/get-started-quickly
+- type: APIReference
+  url: https://docs.quadrata.com/integration/how-to-integrate/quadrata-sdk/advanced/api-libraries/api-service-libraries
+- type: SignUp
+  url: https://quadrata.com/onboard
+- type: TermsOfService
+  url: https://quadrata.com/terms
+- type: PrivacyPolicy
+  url: https://quadrata.com/privacy
+- type: Blog
+  url: https://medium.com/quadrata-network
+- type: Support
+  url: https://discord.com/invite/67QgzrymHW
+- type: Twitter
+  url: https://twitter.com/QuadrataNetwork
+- type: LinkedIn
+  url: https://www.linkedin.com/company/quadrata-inc/
+- type: Sandbox
+  url: https://sandbox.quadrata.com
+- type: Authentication
+  url: authentication/quadrata-authentication.yml
+- type: Conventions
+  url: conventions/quadrata-conventions.yml
+- type: ErrorCatalog
+  url: errors/quadrata-error-codes.yml
+- type: Webhooks
+  url: asyncapi/quadrata-webhooks.yml
+- type: DataModel
+  url: data-model/quadrata-data-model.yml
+- type: Packages
+  url: packages/quadrata-packages.yml
+- type: SDKs
+  url: packages/quadrata-packages.yml
+- type: Components
+  url: components/quadrata-components.yml
+- type: MCPServer
+  url: mcp/quadrata-mcp.yml
+- type: Lifecycle
+  url: lifecycle/quadrata-lifecycle.yml
+- type: DomainSecurity
+  url: security/quadrata-domain-security.yml
+- type: LLMsTxt
+  url: llms/quadrata-llms.txt
+- type: Sandbox
+  url: sandbox/quadrata-sandbox.yml
