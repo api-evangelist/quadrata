@@ -1,9 +1,7 @@
 generated: '2026-07-20'
 method: derived
 status: candidate
-source: >-
-  Derived from documented Quadrata REST API operations and @quadrata/sdk/api service libraries
-  (https://docs.quadrata.com/integration/how-to-integrate/quadrata-sdk/advanced/api-libraries/api-service-libraries).
+source: Derived from documented Quadrata REST API operations and @quadrata/sdk/api service libraries (https://docs.quadrata.com/integration/how-to-integrate/quadrata-sdk/advanced/api-libraries/api-service-libraries).
   No official hosted/remote Quadrata MCP server was found.
 server:
   name: quadrata
@@ -37,3 +35,9 @@ tools:
 - name: fetch_passport_list
   description: Fetch the list of passports.
   source_operation: '@quadrata/sdk/api fetchPassportList'
+deployment:
+  mode: none
+  verified: derived
+  tools: 9
+  checked: '2026-08-12'
+  source: catalog MCP census
